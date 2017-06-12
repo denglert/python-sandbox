@@ -28,3 +28,5 @@ What is important:
   encodings
 - this approach allows you to be flexible about alternative text encodings (e.g. Latin-1, Big5,
   etc.), while being strict about your output text encoding (ideally UTF-8)
+
+...
