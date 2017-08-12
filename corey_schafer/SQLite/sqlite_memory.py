@@ -1,24 +1,22 @@
 import sqlite3
 from employee import  Employee
 
-
-database_file = 'employee.db'
-conn = sqlite3.connect(database_file)
+# - Create a database living only in memory
+conn = sqlite3.connect(':memory:')
 
 c = conn.cursor()
 
 # - Create an employee table
-#c.execute("""CREATE TABLE employees (
-#            first text,
-#            last text,
-#            pay integer
-#            )""")
-
+c.execute("""CREATE TABLE employees (
+            first text,
+            last text,
+            pay integer
+            )""")
 
 emp_1 = Employee('John', 'Wick', 100000)
 emp_2 = Employee('Jane', 'Doe', 90000)
 
-print(emp_1)
+#print(emp_1)
 
 # - Bad practice: String formatting
 # - DO NOT DO THIS!
@@ -28,7 +26,7 @@ print(emp_1)
 # - Secure method #1:
 # - DB API placeholders: ?
 # - Pass the variables as an argument of .execute() in form of a tuple.
-c.execute("INSERT INTO employees VALUES (?, ?, ?)", (emp_1.first, emp_2.last, emp_1.pay) )
+#c.execute("INSERT INTO employees VALUES (?, ?, ?)", (emp_1.first, emp_2.last, emp_1.pay) )
 
 
 # - Secure method #2:
@@ -42,6 +40,7 @@ c.execute("INSERT INTO employees VALUES (:first, :last, :pay)", dict)
 
 #c.execute("SELECT * FROM employees WHERE last='Schafer'")
 c.execute("SELECT * FROM employees")
+#c.execute("SELECT * FROM employees WHERE last=:last", {'last': 'Doe'})
 
 print(c.fetchall())
 
